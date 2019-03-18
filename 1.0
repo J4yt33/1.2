@@ -1,0 +1,137 @@
+/*
+das Programm liest fuer 4 Fahrzeuge daten ein und gibt diese wieder aus
+
+
+*/
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+#define AnzahlFahrzeuge 4
+
+
+//funktion zum einlesen der Zeichenketten und erweitern des speichers
+char* zeichenketteEinlesen(void){
+int ZeichenNo=1;          //zählvariable
+char * ZeichenKette='NULL';    //pointer auf die Zeichenkette
+
+ZeichenKette=(char *)calloc(ZeichenNo,sizeof(char));  //reserviere Speicher für 1 Zeichen und eins für das String Ende Zeichen und initialisiere direkt mit 0
+
+//pruefe ob Speicher erfolgreich reserviert wurde
+if(ZeichenKette=='NULL'){
+printf("Der Speicher konnte nicht reserviert werden.\n");
+printf("Bitte bestaetigen sie mit der EnterTaste\n");
+scanf("%c",&ZeichenNo);
+return;
+}
+
+//Lese Solange ein bis das letzte eingegebene Zeichen Enter war war
+do{
+//erweitere Speicher
+ZeichenKette=realloc(ZeichenKette,(ZeichenNo+1)*sizeof(char));
+
+//pruefe ob Speicher erfolgreich reserviert wurde
+if(ZeichenKette=='NULL'){
+printf("Der Speicher konnte nicht reserviert werden.\n");
+printf("Bitte bestaetigen sie mit der EnterTaste\n");
+scanf("%c",&ZeichenNo);
+return;
+}
+
+//lese Zeichen ein
+ZeichenKette[ZeichenNo-1]= getchar();
+//Zaehle ein Zeichen hoch
+ZeichenNo++;
+
+//pruefe ob das letzte eingegebene Zeichen Enter war
+}while(ZeichenKette[ZeichenNo-2]!='\n'&&ZeichenKette[ZeichenNo-2]!='\r');
+
+//gebe die Adresse der Zeichenkette zurück
+return ZeichenKette;
+}
+
+
+
+
+int main()
+{
+ int FahrzeugNo=0;  //Zählvariable fuer die Fahrzeuge
+
+ //struktur fuer die Fahrzeugdaten
+   typedef struct {
+    char * hersteller;
+    char * modell;
+    char * seriennummer;
+    int leerGewicht;
+    int leistung;
+    int anzReifen;
+   }fahrzeug;
+
+   //strukturarray das 4 fahrzeuge aufnimmt
+   fahrzeug f[AnzahlFahrzeuge];
+
+//lese alle Daten fuer jedes Fahrzeug ein
+   for(FahrzeugNo=0;FahrzeugNo<AnzahlFahrzeuge;FahrzeugNo++){
+   printf("Fahrzeug No.%i\n\n",FahrzeugNo);
+   printf("Bitte geben sie den Hersteller an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+   f[FahrzeugNo].hersteller=zeichenketteEinlesen();
+   printf("Bitte geben sie das modell an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+   f[FahrzeugNo].modell=zeichenketteEinlesen();
+   printf("Bitte geben sie die Seriennummer an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+   f[FahrzeugNo].seriennummer=zeichenketteEinlesen();
+
+do{
+//Eingabeaufforderung
+   printf("Bitte geben sie das leerGewiht an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+//lese Daten ein
+  scanf("%i",&f[FahrzeugNo].leerGewicht);
+//pruefe auf korrekte Eingabe
+if(f[FahrzeugNo].leerGewicht<0)printf("Ungueltige Eingabe, muss >0 sein.");
+}while(f[FahrzeugNo].leerGewicht<0);
+
+do{
+//Eingabeaufforderung
+   printf("Bitte geben sie die leistung an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+//lese Daten ein
+   scanf("%i",&f[FahrzeugNo].leistung);
+//pruefe auf korrekte Eingabe
+if(f[FahrzeugNo].leistung<0)printf("Ungueltige Eingabe, muss >0 sein.");
+}while(f[FahrzeugNo].leistung<0);
+
+do{
+//Eingabeaufforderung
+   printf("Bitte geben sie die AnzahlReifen an und bestaetigen sie ihre Eingabe mit der EnterTaste\n");
+//lese Daten ein
+   scanf("%i",&f[FahrzeugNo].anzReifen);
+//pruefe auf korrekte Eingabe
+if(f[FahrzeugNo].anzReifen<0)printf("Ungueltige Eingabe, muss >0 sein.");
+}while(f[FahrzeugNo].anzReifen<0);
+   }
+
+
+
+   //ausgabe
+      for(FahrzeugNo=0;FahrzeugNo<AnzahlFahrzeuge;FahrzeugNo++){
+        printf("Fahrzeug No%i\n",FahrzeugNo);
+        printf("Hersteller:%s\n",f[FahrzeugNo].hersteller);
+        printf("modell:%s\n",f[FahrzeugNo].modell);
+        printf("seriennummer:%s\n",f[FahrzeugNo].seriennummer);
+        printf("leerGewicht:%i\n",f[FahrzeugNo].leerGewicht);
+        printf("leistung:%i\n",f[FahrzeugNo].leistung);
+        printf("anzReifen:%i\n",f[FahrzeugNo].anzReifen);
+        printf("\n\n");
+}
+
+//gebe speicher wieder frei
+      for(FahrzeugNo=0;FahrzeugNo<AnzahlFahrzeuge;FahrzeugNo++){
+        free(f[FahrzeugNo].hersteller);
+        free(f[FahrzeugNo].modell);
+        free(f[FahrzeugNo].seriennummer);
+}
+
+
+    return 0;
+}
