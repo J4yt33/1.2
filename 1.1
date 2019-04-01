@@ -1,21 +1,3 @@
-
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-
- #define AnzahlFahrzeuge 4
-
- //struktur fuer die Fahrzeugdaten
-   typedef struct {
-    char * hersteller;
-    char * modell;
-    char * seriennummer;
-    int leerGewicht;
-    int leistung;
-    int anzReifen;
-   }fahrzeug;
-
-
 //funktion zum einlesen der Zeichenketten und erweitern des speichers
 char* zeichenketteEinlesen(void){
 int ZeichenNo=1;          //zählvariable
@@ -35,7 +17,7 @@ return;
 
 
 
-//Lese Solange ein bis das letzte eingegebene Zeichen Enter war war
+//Lese Solange ein bis das letzte eingegebene Zeichen Enter war
 do{
 //erweitere Speicher
 ZeichenKette=realloc(ZeichenKette,(ZeichenNo+1)*sizeof(char));
@@ -59,7 +41,3 @@ ZeichenNo++;
 //gebe die Adresse der Zeichenkette zurück
 return ZeichenKette;
 }
-
-
-
-
